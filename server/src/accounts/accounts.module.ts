@@ -4,6 +4,7 @@ import { AccountsService } from './accounts.service';
 import { Account } from './accounts.entity'
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from 'users/users.module';
+import { UsersService } from 'users/users.service';
 
 @Module({
     imports: [TypeOrmModule.forFeature([Account]), UsersModule],

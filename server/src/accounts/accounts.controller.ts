@@ -1,9 +1,10 @@
-import { Get, Post, Controller, Param, Body, Put, Delete } from '@nestjs/common';
+import { Get, Post, Controller, Param, Body, Put, Delete, Session } from '@nestjs/common';
 import { AccountsService } from './accounts.service';
 import { Account } from './accounts.entity'
 import { UsersService } from '../users/users.service'
+import { AccountsDTO } from './accounts.dto';
 
-@Controller('Accounts')
+@Controller('accounts')
 export class AccountsController {
     constructor(private readonly AccountsService: AccountsService, private readonly usersService: UsersService) { }
 
@@ -28,19 +29,23 @@ export class AccountsController {
     }
 
     @Post()
-    async create(@Body() AccountDTO): Promise<Account> {
-        const user = await this.usersService.getUser({ name: AccountDTO.user })
-        AccountDTO.user = user ? user : await this.usersService.createAndSaveUser(AccountDTO)
-        return await this.AccountsService.createAndSaveAccount(AccountDTO);
+    async createAccount(@Body() accountDTO: AccountsDTO): Promise<Account> {
+        console.log(accountDTO, 'asdsda')
+        const user = await this.usersService.getUser(accountDTO.user)
+        if (!user) {
+            throw new Error('User not found')
+            //HTTP RESPONSE NOT ERROR
+        }
+        return await this.AccountsService.createAndSaveAccount({ user: user });
     }
 
     @Put(':id')
-    async update(@Param('id') id, @Body() updates: Partial<Account>): Promise<Account> {
+    async updateAccount(@Param('id') id, @Body() updates: Partial<Account>): Promise<Account> {
         return await this.AccountsService.updateAccount(id, updates)
     }
 
     @Delete(':id')
-    async remove(@Param('id') id): Promise<Account> {
+    async removeAccount(@Param('id') id): Promise<Account> {
         return this.AccountsService.removeAccount(id)
     }
 

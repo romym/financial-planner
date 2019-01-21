@@ -23,9 +23,9 @@ export class Account {
     @Column({ default: 0 })
     remaining: number;
 
-    @Column({ default: 0 })
+    @Column({ default: Period.Month })
     period: Period;
 
     @ManyToOne(type => User, user => user.accounts)
-    user: string
+    user: User
 }

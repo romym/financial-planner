@@ -1,3 +1,5 @@
+import { User } from "../users/users.entity";
+
 export class AccountsDTO {
-    user: string
+    user: User
 }
