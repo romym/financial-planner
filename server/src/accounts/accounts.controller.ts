@@ -6,11 +6,11 @@ import { AccountsDTO } from './accounts.dto';
 
 @Controller('accounts')
 export class AccountsController {
-    constructor(private readonly AccountsService: AccountsService, private readonly usersService: UsersService) { }
+    constructor(private readonly accountsService: AccountsService, private readonly usersService: UsersService) { }
 
     @Get()
     async getAccounts(): Promise<Account[]> {
-        return await this.AccountsService.getAllAccounts()
+        return await this.accountsService.getAllAccounts()
     }
 
     // @Get('genres')
@@ -25,7 +25,7 @@ export class AccountsController {
 
     @Get(':id')
     async getAccount(@Param('id') id): Promise<Account> {
-        return await this.AccountsService.getAccount(id);
+        return await this.accountsService.getAccount(id);
     }
 
     @Post()
@@ -36,17 +36,22 @@ export class AccountsController {
             throw new Error('User not found')
             //HTTP RESPONSE NOT ERROR
         }
-        return await this.AccountsService.createAndSaveAccount({ user: user });
+        return await this.accountsService.createAndSaveAccount({ user: user });
     }
 
     @Put(':id')
     async updateAccount(@Param('id') id, @Body() updates: Partial<Account>): Promise<Account> {
-        return await this.AccountsService.updateAccount(id, updates)
+        const account = await this.accountsService.getAccount(id)
+        if (!account) {
+            throw new Error('Account does not exist')
+            //HTTP RESPONSE NOT ERROR
+        }
+        return await this.accountsService.updateSettings(id, updates)
     }
 
     @Delete(':id')
     async removeAccount(@Param('id') id): Promise<Account> {
-        return this.AccountsService.removeAccount(id)
+        return this.accountsService.removeAccount(id)
     }
 
 }
