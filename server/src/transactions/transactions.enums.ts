@@ -4,5 +4,11 @@ export enum TransactionType {
 }
 
 export enum TransactionCategory {
-    None = 'none'
+    None = 'none',
+    Dining = 'dining',
+    Grocery = 'grocery',
+    Entertainment = 'entertainment',
+    Transportation = 'transportation',
+    Bills = 'bills',
+    Clothing = 'clothing'
 }
