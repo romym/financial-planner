@@ -10,7 +10,7 @@ export class Transaction {
     @Column({ length: 250 })
     memo: string;
 
-    @Column({ default: 0 })
+    @Column("float", { default: 0 })
     amount: number;
 
     @Column({ nullable: false })

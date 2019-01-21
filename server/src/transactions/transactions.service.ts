@@ -3,23 +3,28 @@ import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Transaction } from './transactions.entity';
 import { TransactionsDTO } from './transactions.dto';
+import { TransactionType } from './transactions.enums';
+import { Account } from '../accounts/accounts.entity';
 
 @Injectable()
-export class transactionsService {
+export class TransactionsService {
     constructor(
         @InjectRepository(Transaction)
-        private readonly transactionsRepository: Repository<Transaction>
+        private readonly transactionsRepository: Repository<Transaction>,
+        @InjectRepository(Account)
+        private readonly accountsRepository: Repository<Account>
     ) { }
 
     async gettransaction(id): Promise<Transaction> {
-        return await this.transactionsRepository.findOne(id, { relations: ['user'] })
+        return await this.transactionsRepository.findOne(id, { relations: ['account'] })
     }
 
     async getAlltransactions(): Promise<Transaction[]> {
-        return await this.transactionsRepository.find({ relations: ['user'] })
+        return await this.transactionsRepository.find({ relations: ['account'] })
     }
 
     async createAndSavetransaction(transactionDTO: TransactionsDTO): Promise<Transaction> {
+        await this.updateAccountAfterTransaction(transactionDTO)
         const transaction = this.transactionsRepository.create(transactionDTO)
         const savedtransaction = await this.transactionsRepository.save(transaction)
         return await this.gettransaction(savedtransaction)
@@ -30,31 +35,24 @@ export class transactionsService {
         return await this.transactionsRepository.remove(transaction)
     }
 
-    // async rankGenresByMosttransactions() {
-    //     const transactions = await this.getAlltransactions()
-    //     const genreRankings = {}
-    //     for (let i = 0; i <= transactions.length - 1; i++) {
-    //         if (genreRankings[transactions[i].genre] >= 0) {
-    //             genreRankings[transactions[i].genre] += 1
-    //         }
-    //         else {
-    //             genreRankings[transactions[i].genre] = 0
-    //         }
-    //     }
-    //     return genreRankings
-    // }
+    async updateAccountAfterTransaction(transactionDTO: TransactionsDTO): Promise<Account> {
+        if (transactionDTO.type == TransactionType.Income) {
+            return await this.performIncomeTransaction(transactionDTO.account, transactionDTO.amount)
+        }
+        if (transactionDTO.type == TransactionType.Spending) {
+            return await this.performSpendingTransaction(transactionDTO.account, transactionDTO.amount)
+        }
+    }
 
-    // async rankYearsByMosttransactions() {
-    //     const transactions = await this.getAlltransactions()
-    //     const yearsRankings = {}
-    //     for (let i = 0; i <= transactions.length - 1; i++) {
-    //         if (yearsRankings[transactions[i].year] >= 0) {
-    //             yearsRankings[transactions[i].year] += 1
-    //         }
-    //         else {
-    //             yearsRankings[transactions[i].year] = 0
-    //         }
-    //     }
-    //     return yearsRankings
-    // }
+    async performIncomeTransaction(account, amount) {
+        account.income += amount
+        account.remaining += amount
+        return await this.accountsRepository.save(account)
+    }
+
+    async performSpendingTransaction(account, amount) {
+        account.spending += amount
+        account.remaining -= amount
+        return await this.accountsRepository.save(account)
+    }
 }

@@ -6,4 +6,6 @@ export class TransactionsDTO {
     account: Account
     type: TransactionType
     category: TransactionCategory
+    amount: number
+    memo: string
 }

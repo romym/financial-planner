@@ -30,7 +30,6 @@ export class AccountsController {
 
     @Post()
     async createAccount(@Body() accountDTO: AccountsDTO): Promise<Account> {
-        console.log(accountDTO, 'asdsda')
         const user = await this.usersService.getUser(accountDTO.user)
         if (!user) {
             throw new Error('User not found')

@@ -8,31 +8,31 @@ import { AccountsDTO } from './accounts.dto';
 export class AccountsService {
     constructor(
         @InjectRepository(Account)
-        private readonly AccountsRepository: Repository<Account>
+        private readonly accountsRepository: Repository<Account>
     ) { }
 
     async getAccount(id): Promise<Account> {
-        return await this.AccountsRepository.findOne(id, { relations: ['user'] })
+        return await this.accountsRepository.findOne(id, { relations: ['user', 'transactions'] })
     }
 
     async getAllAccounts(): Promise<Account[]> {
-        return await this.AccountsRepository.find({ relations: ['user'] })
+        return await this.accountsRepository.find({ relations: ['user', 'transactions'] })
     }
 
     async createAndSaveAccount(accountDTO: AccountsDTO): Promise<Account> {
-        const account = this.AccountsRepository.create(accountDTO)
-        const savedAccount = await this.AccountsRepository.save(account)
+        const account = this.accountsRepository.create(accountDTO)
+        const savedAccount = await this.accountsRepository.save(account)
         return await this.getAccount(savedAccount)
     }
 
     async updateSettings(account: number, updates: Partial<Account>): Promise<Account> {
-        await this.AccountsRepository.update(account, { budget: updates.budget, period: updates.period, remaining: updates.budget })
+        await this.accountsRepository.update(account, { budget: updates.budget, period: updates.period, remaining: updates.budget })
         return await this.getAccount(account)
     }
 
     async removeAccount(AccountID: number): Promise<Account> {
-        const Account = await this.getAccount(AccountID)
-        return await this.AccountsRepository.remove(Account)
+        const account = await this.getAccount(AccountID)
+        return await this.accountsRepository.remove(account)
     }
 
     // async rankGenresByMostAccounts() {

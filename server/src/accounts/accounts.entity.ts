@@ -8,16 +8,16 @@ export class Account {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column({ default: 0 })
+    @Column('float', { default: 0 })
     spending: number;
 
-    @Column({ default: 0 })
+    @Column('float', { default: 0 })
     income: number;
 
-    @Column({ default: 0 })
+    @Column('float', { default: 0 })
     budget: number;
 
-    @Column({ default: 0 })
+    @Column('float', { default: 0 })
     remaining: number;
 
     @Column({ default: Period.Month })
