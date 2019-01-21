@@ -1,10 +1,7 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany, JoinTable } from 'typeorm';
 import { User } from '../users/users.entity';
-
-enum Period {
-    Week = "week",
-    Month = 'month'
-}
+import { Period } from './accounts.enums'
+import { Transaction } from 'transactions/transactions.entity';
 
 @Entity()
 export class Account {
@@ -26,6 +23,11 @@ export class Account {
     @Column({ default: Period.Month })
     period: Period;
 
-    @ManyToOne(type => User, user => user.accounts)
+    @OneToMany(type => Transaction, transaction => transaction.account)
+    transactions: Transaction[];
+    @JoinTable()
+
+    @ManyToOne(type => User, user => user.accounts, { nullable: false })
     user: User
+
 }

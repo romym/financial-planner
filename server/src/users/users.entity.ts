@@ -11,9 +11,9 @@ export class User {
     accounts: Account[];
     @JoinTable()
 
-    @Column({ length: 150 })
+    @Column({ length: 150, nullable: false })
     name: string;
 
-    @Column({ length: 150 })
+    @Column({ length: 150, nullable: false })
     email: string;
 }
