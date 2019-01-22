@@ -1,0 +1,17 @@
+.footer {
+    background: #000000;
+    min-height: 45vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: white;
+  }
+
+  .stats {
+    font-size: calc(58px + 2vmin);
+    align-self: end;
+    margin: 0px 0px 250px 20px;
+    text-shadow:  2px 2px #ffffff, 0 1px white;
+  }

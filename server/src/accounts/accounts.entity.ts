@@ -1,7 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany, JoinTable } from 'typeorm';
 import { User } from '../users/users.entity';
 import { Period } from './accounts.enums'
-import { Transaction } from 'transactions/transactions.entity';
+import { Transaction } from '../transactions/transactions.entity';
 
 @Entity()
 export class Account {
