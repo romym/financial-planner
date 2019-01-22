@@ -9,6 +9,7 @@ class App extends Component {
     super();
     this.state = {
       formType: 'none',
+      disabledCSS: 'header-links-disabled',
     };
   }
 
@@ -16,14 +17,23 @@ class App extends Component {
 
   formTypeHandler(formType) {
     this.setState({ formType: formType });
-    console.log(this.state.formType);
+  }
+
+  enableTransactions() {
+    this.setState({ disabledCSS: 'header-links' });
   }
 
   render() {
     return (
       <div className="App">
-        <Header formTypeHandler={formType => this.formTypeHandler(formType)} />
-        <Main formType={this.state.formType} />
+        <Header
+          disabledCSS={this.state.disabledCSS}
+          formTypeHandler={formType => this.formTypeHandler(formType)}
+        />
+        <Main
+          enableTransactions={() => this.enableTransactions()}
+          formType={this.state.formType}
+        />
         <Footer />
       </div>
     );

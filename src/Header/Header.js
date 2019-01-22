@@ -1,22 +1,10 @@
 import React, { Component } from 'react';
 import './Header.css';
-import {
-  createNewUser,
-  createNewTransaction,
-  createNewBudget,
-} from '../Actions/requests';
 
 class Header extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      disabledCSS: 'header-links-disabled',
-    };
-  }
-
-  async createNewUser(name, email) {
-    await createNewUser({ name, email });
-    this.setState({ disabledCSS: 'header-links' });
+    this.state = {};
   }
 
   newUserForm() {
@@ -38,13 +26,13 @@ class Header extends Component {
           New User
         </p>
         <p
-          className={`${this.state.transactionDisabled}`}
+          className={`${this.props.disabledCSS}`}
           onClick={() => this.newBudgetForm()}
         >
           New Budget
         </p>
         <p
-          className={`${this.state.transactionDisabled}`}
+          className={`${this.props.disabledCSS}`}
           onClick={() => this.newTransactionForm()}
         >
           Add Transaction
