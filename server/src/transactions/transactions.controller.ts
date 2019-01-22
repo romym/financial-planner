@@ -21,7 +21,7 @@ export class TransactionsController {
 
     @Post()
     async createtransaction(@Body() transactionDTO: TransactionsDTO): Promise<Transaction> {
-        const account = await this.accountsService.getAccount(transactionDTO.account)
+        const account = await this.accountsService.getAccount(transactionDTO.account.id)
         if (!account) {
             throw new Error('Account Not Found')
             //HTTP RESPONSE NOT ERROR
@@ -30,6 +30,7 @@ export class TransactionsController {
             throw new Error('Invalid Transaction Type')
         }
         transactionDTO.account = account
+        transactionDTO.amount = Number(transactionDTO.amount)
         return await this.transactionsService.createAndSavetransaction(transactionDTO);
     }
 

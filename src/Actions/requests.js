@@ -9,6 +9,15 @@ async function getUsers() {
   return parsedJson;
 }
 
+async function getAccount(accountId) {
+  const response = await fetch(`${hostUrl}/accounts/${accountId}`, {
+    accept: 'application/json',
+  });
+  const checkedStatus = checkStatus(response);
+  const parsedJson = await parseJSON(checkedStatus);
+  return parsedJson;
+}
+
 async function createNewUser(userDTO) {
   const response = await fetch(`${hostUrl}/users/`, {
     accept: 'application/json',
@@ -17,11 +26,11 @@ async function createNewUser(userDTO) {
     body: JSON.stringify(userDTO),
   });
   const checkedStatus = checkStatus(response);
-  const parsedJson = parseJSON(checkedStatus);
+  const parsedJson = await parseJSON(checkedStatus);
   return parsedJson;
 }
 
-async function createNewBudget(accountDTO) {
+async function createNewAccount(accountDTO) {
   const response = await fetch(`${hostUrl}/accounts/`, {
     accept: 'application/json',
     method: 'POST',
@@ -29,7 +38,7 @@ async function createNewBudget(accountDTO) {
     body: JSON.stringify(accountDTO),
   });
   const checkedStatus = checkStatus(response);
-  const parsedJson = parseJSON(checkedStatus);
+  const parsedJson = await parseJSON(checkedStatus);
   return parsedJson;
 }
 
@@ -41,7 +50,7 @@ async function createNewTransaction(transactionDTO) {
     body: JSON.stringify(transactionDTO),
   });
   const checkedStatus = checkStatus(response);
-  const parsedJson = parseJSON(checkedStatus);
+  const parsedJson = await parseJSON(checkedStatus);
   return parsedJson;
 }
 
@@ -60,4 +69,10 @@ async function parseJSON(response) {
   return response.json();
 }
 
-export { getUsers, createNewUser, createNewBudget, createNewTransaction };
+export {
+  getUsers,
+  createNewUser,
+  createNewAccount,
+  createNewTransaction,
+  getAccount,
+};
