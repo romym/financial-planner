@@ -19,26 +19,26 @@ export class AccountsController {
         return await this.accountsService.getAccount(id);
     }
 
-    @Post()
-    async createAccount(@Body() accountDTO: AccountsDTO): Promise<Account> {
-        const user = await this.usersService.getUser(accountDTO.user)
-        if (!user) {
-            throw new Error('User not found')
-            //HTTP RESPONSE NOT ERROR
-        }
-        return await this.accountsService.createAndSaveAccount({ user: user });
-    }
-
     // @Post()
-    // async createAccount(@Session() session): Promise<Account> {
-    //     console.log(session, 'sessionson')
-    //     const user = await this.usersService.getUser(session.user)
+    // async createAccount(@Body() accountDTO: AccountsDTO): Promise<Account> {
+    //     const user = await this.usersService.getUser(accountDTO.user)
     //     if (!user) {
     //         throw new Error('User not found')
     //         //HTTP RESPONSE NOT ERROR
     //     }
     //     return await this.accountsService.createAndSaveAccount({ user: user });
     // }
+
+    @Post()
+    async createAccount(@Session() session): Promise<Account> {
+        console.log(session, 'sessionson')
+        const user = await this.usersService.getUser(session.user)
+        if (!user) {
+            throw new Error('User not found')
+            //HTTP RESPONSE NOT ERROR
+        }
+        return await this.accountsService.createAndSaveAccount({ user: user });
+    }
 
     @Put(':id')
     async updateBudget(@Param('id') id, @Body() updates: Partial<Account>): Promise<Account> {
