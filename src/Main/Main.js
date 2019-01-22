@@ -26,11 +26,11 @@ class Main extends Component {
     if (user) this.props.enableTransactions();
     this.setState({ user, account });
   }
-
   async createNewUser(name, email) {
     const user = await createNewUser({ name, email });
     this.setState({ user: user }, () => {
       localStorage.setItem('loggedInUser', JSON.stringify(this.state.user));
+      this.props.enableTransactions();
     });
   }
 

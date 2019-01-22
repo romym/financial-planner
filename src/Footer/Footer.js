@@ -13,14 +13,14 @@ class Footer extends Component {
   async componentWillMount() {
     let account =
       JSON.parse(localStorage.getItem('loggedInUserAccount')) || null;
-    account = await getAccount(account.id);
+    if (account) account = await getAccount(account.id);
     this.setState({ account });
   }
 
-  async componentWillUpdate() {
+  async componentDidUpdate() {
     let account =
       JSON.parse(localStorage.getItem('loggedInUserAccount')) || null;
-    account = await getAccount(account.id);
+    if (account) account = await getAccount(account.id);
     this.setState({ account });
   }
 

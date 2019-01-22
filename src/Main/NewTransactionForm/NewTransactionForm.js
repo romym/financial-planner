@@ -8,7 +8,7 @@ class NewTransactionForm extends Component {
       category: 'Enter category',
       account: this.props.account,
       amount: 'Enter amount',
-      memo: 'Enter Mmmo',
+      memo: 'Enter Memo',
     };
 
     this.handleChange = this.handleChange.bind(this);
