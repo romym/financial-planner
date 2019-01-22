@@ -46,13 +46,13 @@ export class TransactionsService {
 
     async performIncomeTransaction(account, amount) {
         account.income += amount
-        account.remaining += amount
+        account.remaining = Number((account.remaining + amount).toFixed(2))
         return await this.accountsRepository.save(account)
     }
 
     async performSpendingTransaction(account, amount) {
         account.spending += amount
-        account.remaining -= amount
+        account.remaining = Number((account.remaining - amount).toFixed(2))
         return await this.accountsRepository.save(account)
     }
 }
