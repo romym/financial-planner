@@ -37,7 +37,7 @@ class Header extends Component {
         >
           Add Transaction
         </p>
-        <p className="todays-date">1/01/10</p>
+        <p className="todays-date">{new Date().toString().slice(4, 15)}</p>
       </div>
     );
   }

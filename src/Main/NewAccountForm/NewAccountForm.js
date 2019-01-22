@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 
-class NewUserForm extends Component {
+class NewAccountForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: 'Enter name',
-      email: 'Enter email',
+      period: 'Enter either week or month',
+      budgetAmount: 'Enter budget amount',
+      user: this.props.user,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -21,7 +22,11 @@ class NewUserForm extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    this.props.handleSubmit(this.state.name, this.state.email);
+    this.props.handleSubmit(
+      this.state.period,
+      this.state.budgetAmount,
+      this.state.user,
+    );
   };
 
   render() {
@@ -30,23 +35,23 @@ class NewUserForm extends Component {
         <form onSubmit={this.handleSubmit}>
           <label>
             <textarea
-              value={this.state.name}
-              name="name"
+              value={this.state.period}
+              name="period"
               onChange={this.handleChange}
             />
           </label>
           <label>
             <textarea
-              value={this.state.email}
-              name="email"
+              value={this.state.budgetAmount}
+              name="budgetAmount"
               onChange={this.handleChange}
             />
           </label>
-          <input type="submit" value="Create New User" />
+          <input type="submit" value="Create New Budget" />
         </form>
       </div>
     );
   }
 }
 
-export default NewUserForm;
+export default NewAccountForm;

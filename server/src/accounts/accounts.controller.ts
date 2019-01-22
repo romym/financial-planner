@@ -19,38 +19,16 @@ export class AccountsController {
         return await this.accountsService.getAccount(id);
     }
 
-    // @Post()
-    // async createAccount(@Body() accountDTO: AccountsDTO): Promise<Account> {
-    //     const user = await this.usersService.getUser(accountDTO.user)
-    //     if (!user) {
-    //         throw new Error('User not found')
-    //         //HTTP RESPONSE NOT ERROR
-    //     }
-    //     return await this.accountsService.createAndSaveAccount({ user: user });
-    // }
-
     @Post()
-    async createAccount(@Session() session): Promise<Account> {
-        console.log(session, 'sessionson')
-        const user = await this.usersService.getUser(session.user)
+    async createAccount(@Body() accountDTO: AccountsDTO): Promise<Account> {
+        const user = await this.usersService.getUser(accountDTO.user)
         if (!user) {
             throw new Error('User not found')
-            //HTTP RESPONSE NOT ERROR
         }
-        return await this.accountsService.createAndSaveAccount({ user: user });
-    }
-
-    @Put(':id')
-    async updateBudget(@Param('id') id, @Body() updates: Partial<Account>): Promise<Account> {
-        const account = await this.accountsService.getAccount(id)
-        if (!account) {
-            throw new Error('Account does not exist')
-            //HTTP RESPONSE NOT ERROR
-        }
-        if (updates.period != Period.Month && updates.period != Period.Week) {
+        if (accountDTO.period != Period.Month && accountDTO.period != Period.Week) {
             throw new Error('Invalid Period')
         }
-        return await this.accountsService.updateBudget(id, updates)
+        return await this.accountsService.createAndSaveAccount({ user: user, budget: accountDTO.budget, period: accountDTO.period });
     }
 
     @Delete(':id')
