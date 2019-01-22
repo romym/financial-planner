@@ -19,3 +19,9 @@
 .header-links:hover {
     font-size: calc(12px + 2vmin);
 }
+
+.header-links-disabled {
+    color: #969696;
+    cursor: none;
+    padding: 10px;
+}
