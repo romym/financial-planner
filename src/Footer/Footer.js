@@ -17,13 +17,6 @@ class Footer extends Component {
     this.setState({ account });
   }
 
-  async componentDidUpdate() {
-    let account =
-      JSON.parse(localStorage.getItem('loggedInUserAccount')) || null;
-    if (account) account = await getAccount(account.id);
-    this.setState({ account });
-  }
-
   render() {
     const { account } = this.state;
     return (
