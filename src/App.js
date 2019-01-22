@@ -1,26 +1,29 @@
 import React, { Component } from 'react';
-import Footer from './Footer/Footer'
-import Header from './Header/Header'
-import Main from './Main/Main'
-import './App.css'
+import Footer from './Footer/Footer';
+import Header from './Header/Header';
+import Main from './Main/Main';
+import './App.css';
 
 class App extends Component {
   constructor() {
-    super()
+    super();
     this.state = {
-      
-    }
+      formType: 'none',
+    };
   }
 
-  componentDidMount() {
-      
+  componentDidMount() {}
+
+  formTypeHandler(formType) {
+    this.setState({ formType: formType });
+    console.log(this.state.formType);
   }
 
   render() {
     return (
       <div className="App">
-        <Header />
-        <Main />
+        <Header formTypeHandler={formType => this.formTypeHandler(formType)} />
+        <Main formType={this.state.formType} />
         <Footer />
       </div>
     );

@@ -22,7 +22,7 @@
 
 .header-links-disabled {
     color: #969696;
-    cursor: none;
+    cursor: auto;
     padding: 10px;
 }
 
