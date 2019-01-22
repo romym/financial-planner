@@ -25,7 +25,7 @@ export class AccountsService {
         return await this.getAccount(savedAccount)
     }
 
-    async updateSettings(account: number, updates: Partial<Account>): Promise<Account> {
+    async updateBudget(account: number, updates: Partial<Account>): Promise<Account> {
         await this.accountsRepository.update(account, { budget: updates.budget, period: updates.period, remaining: updates.budget })
         return await this.getAccount(account)
     }

@@ -14,16 +14,6 @@ export class TransactionsController {
         return await this.transactionsService.getAlltransactions()
     }
 
-    // @Get('genres')
-    // async getRankingsByGenre() {
-    //     return await this.transactionsService.rankGenresByMosttransactions()
-    // }
-
-    // @Get('years')
-    // async getRankingsByYear() {
-    //     return await this.transactionsService.rankYearsByMosttransactions()
-    // }
-
     @Get(':id')
     async gettransaction(@Param('id') id): Promise<Transaction> {
         return await this.transactionsService.gettransaction(id);

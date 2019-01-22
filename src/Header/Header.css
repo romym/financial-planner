@@ -1,0 +1,21 @@
+.header {
+  background: #d8d8d8;
+  min-height: 10vh;
+  max-height: 10vh;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.header-links {
+    padding: 10px;
+    color: #26af22;
+    cursor: pointer;
+}
+
+.header-links:hover {
+    font-size: calc(12px + 2vmin);
+}

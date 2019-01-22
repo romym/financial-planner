@@ -41,7 +41,7 @@ export class AccountsController {
     // }
 
     @Put(':id')
-    async updateAccount(@Param('id') id, @Body() updates: Partial<Account>): Promise<Account> {
+    async updateBudget(@Param('id') id, @Body() updates: Partial<Account>): Promise<Account> {
         const account = await this.accountsService.getAccount(id)
         if (!account) {
             throw new Error('Account does not exist')
@@ -50,7 +50,7 @@ export class AccountsController {
         if (updates.period != Period.Month && updates.period != Period.Week) {
             throw new Error('Invalid Period')
         }
-        return await this.accountsService.updateSettings(id, updates)
+        return await this.accountsService.updateBudget(id, updates)
     }
 
     @Delete(':id')
