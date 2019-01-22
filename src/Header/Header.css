@@ -5,7 +5,7 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
+  justify-content: left;
   font-size: calc(10px + 2vmin);
   color: white;
 }
@@ -24,4 +24,9 @@
     color: #969696;
     cursor: none;
     padding: 10px;
+}
+
+.todays-date {
+    color: #26af22;
+    margin: -10px 0px 10px 600px;
 }
