@@ -1,6 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
 import { TransactionType, TransactionCategory } from './transactions.enums';
 import { Account } from '../accounts/accounts.entity'
+import { IsEnum } from 'class-validator'
 
 @Entity()
 export class Transaction {
